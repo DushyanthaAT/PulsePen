@@ -6,9 +6,11 @@ import { CiSearch } from "react-icons/ci";
 import { FaMoon } from "react-icons/fa";
 
 const Header = () => {
-  const path = useLocation.pathname;
+  const path = useLocation().pathname;
+
   return (
-    <Navbar className="border-b-2 ">
+    <Navbar className="border-b-2">
+      {/* Logo Section */}
       <Link
         to="/"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
@@ -18,26 +20,26 @@ const Header = () => {
         </span>
         Blog
       </Link>
-      <form>
-        <TextInput
-          type="text"
-          placeholder="Search.."
-          rightIcon={CiSearch}
-          className="hidden lg:inline"
-        />
+
+      {/* Search Section */}
+      <form className="hidden lg:inline">
+        <TextInput type="text" placeholder="Search.." rightIcon={CiSearch} />
       </form>
-      <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-        <CiSearch />
-      </Button>
-      <div className="flex gap-2 md:order-2">
+
+      {/* Right-aligned Links and Toggle Button */}
+      <div className="flex items-center gap-2 md:order-2">
         <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
           <FaMoon />
         </Button>
         <Link>
-          <Button gradientDuoTone="purpleToBlue">Signin</Button>
+          <Button gradientDuoTone="purpleToBlue" outline>
+            Signin
+          </Button>
         </Link>
         <Navbar.Toggle />
       </div>
+
+      {/* Collapsible Menu */}
       <Navbar.Collapse>
         <Navbar.Link active={path === "/"} as={"div"}>
           <Link to="/">Home</Link>
@@ -46,7 +48,7 @@ const Header = () => {
           <Link to="/about">About</Link>
         </Navbar.Link>
         <Navbar.Link active={path === "/projects"} as={"div"}>
-          <Link to="/projects">Projectss</Link>
+          <Link to="/projects">Projects</Link>
         </Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
