@@ -11,14 +11,8 @@ const Header = () => {
   return (
     <Navbar className="border-b-2">
       {/* Logo Section */}
-      <Link
-        to="/"
-        className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
-      >
-        <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg">
-          Test
-        </span>
-        Blog
+      <Link to="/" className="self-center whitespace-nowrap w-20">
+        <img src={Logo} alt="logo" />
       </Link>
 
       {/* Search Section */}

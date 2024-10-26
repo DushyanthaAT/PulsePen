@@ -7,14 +7,15 @@ import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
 import Project from "./pages/Project";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const location = useLocation();
-  const hideHeaderPaths = ["/sign-in", "/sign-up"];
+  const hidePaths = ["/sign-in", "/sign-up"];
 
   return (
     <>
-      {!hideHeaderPaths.includes(location.pathname) && <Header />}
+      {!hidePaths.includes(location.pathname) && <Header />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -23,6 +24,7 @@ function App() {
         <Route path="/projects" element={<Project />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      {!hidePaths.includes(location.pathname) && <Footer />}
     </>
   );
 }
