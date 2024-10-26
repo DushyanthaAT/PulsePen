@@ -65,9 +65,9 @@ const Signup = () => {
                 className="text-secondary-light text-[1rem]"
               />
               <TextInput
-                type="email" // Changed type to email for proper validation
+                type="email"
                 placeholder="Email"
-                id="email" // Changed id to email
+                id="email"
                 icon={() => <IoMailOutline className="w-5 text-[#9f9f9f]" />}
                 required
                 style={{
@@ -83,9 +83,9 @@ const Signup = () => {
                 className="text-secondary-light text-[1rem]"
               />
               <TextInput
-                type="password" // Changed type to password for security
+                type="password"
                 placeholder="Password"
-                id="password" // Kept id as password (correct)
+                id="password"
                 icon={() => (
                   <IoLockClosedOutline className="w-4 text-[#9f9f9f]" />
                 )}
