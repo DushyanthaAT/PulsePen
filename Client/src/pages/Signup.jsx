@@ -13,6 +13,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 const customTheme = {
   button: {
@@ -159,6 +160,7 @@ const Signup = () => {
                   "Sign Up"
                 )}
               </Button>
+              <OAuth />
             </div>
           </form>
           <div className="">

@@ -19,6 +19,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 const customTheme = {
   button: {
@@ -147,6 +148,7 @@ const Signin = () => {
                 )}
               </Button>
             </div>
+            <OAuth />
           </form>
           <div className="">
             <span className="text-secondary">Don't have an account? </span>
