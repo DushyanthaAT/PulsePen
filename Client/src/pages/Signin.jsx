@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import bgSignin from "../assets/bgSignin.jpg";
-import logo from "../assets/LOGO.png";
+import logo from "../assets/DarkLogo.png";
 import {
   Flowbite,
   Label,

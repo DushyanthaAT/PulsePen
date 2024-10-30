@@ -1,19 +1,28 @@
 import React from "react";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../assets/LOGO.png";
+import DarkLogo from "../assets/DarkLogo.png";
+import LightLogo from "../assets/LightLogo.png";
+
 import { CiSearch } from "react-icons/ci";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 const Header = () => {
   const path = useLocation().pathname;
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
+
+  const theme = useSelector((state) => state.theme.theme);
+  const logo = theme === "dark" ? LightLogo : DarkLogo;
+  const icon = theme === "dark" ? <FaSun /> : <FaMoon />;
+
   return (
     <Navbar className="border-b-2">
       {/* Logo Section */}
       <Link to="/" className="self-center whitespace-nowrap w-20">
-        <img src={Logo} alt="logo" />
+        <img src={logo} alt="logo" />
       </Link>
 
       {/* Search Section */}
@@ -23,8 +32,13 @@ const Header = () => {
 
       {/* Right-aligned Links and Toggle Button */}
       <div className="flex items-center gap-2 md:order-2">
-        <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
-          <FaMoon />
+        <Button
+          className="w-12 h-10 hidden sm:inline"
+          color="gray"
+          pill
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {icon}
         </Button>
 
         {currentUser ? (

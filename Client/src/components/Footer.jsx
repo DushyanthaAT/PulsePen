@@ -1,19 +1,23 @@
 import React from "react";
 import { Footer } from "flowbite-react";
 import { Link } from "react-router-dom";
-import Logo from "../assets/LOGO.png";
+import DarkLogo from "../assets/DarkLogo.png";
+import LightLogo from "../assets/LightLogo.png";
 import { CiFacebook } from "react-icons/ci";
 import { CiInstagram } from "react-icons/ci";
 import { RiTwitterXFill } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 const FooterCom = () => {
+  const theme = useSelector((state) => state.theme.theme);
+  const logo = theme === "dark" ? LightLogo : DarkLogo;
   return (
     <Footer container className="border border-t-8 border-teal-500">
       <div className="w-full max-w-7xl mx-auto">
         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
           <div>
             <Link to="/" className="self-center whitespace-nowrap w-20">
-              <img src={Logo} alt="logo" className="w-20 mt-5" />
+              <img src={logo} alt="logo" className="w-20 mt-5" />
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
