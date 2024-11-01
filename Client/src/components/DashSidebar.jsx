@@ -1,32 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
 import { HiArrowSmRight, HiUser } from "react-icons/hi";
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const DashSidebar = () => {
   const [tab, setTab] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
-    const urlParms = new URLSearchParams(location.search);
-    const tabFromUrl = urlParms.get("tab");
+    const urlParams = new URLSearchParams(location.search);
+    const tabFromUrl = urlParams.get("tab");
     if (tabFromUrl) {
       setTab(tabFromUrl);
     }
   }, [location.search]);
+
   return (
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup>
-          <Link to="/dashboard?tab=profile">
-            <Sidebar.Item
-              active={tab === "profile"}
-              icon={HiUser}
-              label={"User"}
-              labelColor="dark"
-            >
-              Profile
-            </Sidebar.Item>
-          </Link>
+          <Sidebar.Item
+            active={tab === "profile"}
+            icon={HiUser}
+            label={"User"}
+            labelColor="dark"
+            onClick={() => navigate("/dashboard?tab=profile")}
+          >
+            Profile
+          </Sidebar.Item>
           <Sidebar.Item icon={HiArrowSmRight} className="cursor-pointer">
             Sign Out
           </Sidebar.Item>
