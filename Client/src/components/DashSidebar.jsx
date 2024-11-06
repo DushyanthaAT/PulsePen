@@ -26,6 +26,7 @@ const DashSidebar = () => {
             label={"User"}
             labelColor="dark"
             onClick={() => navigate("/dashboard?tab=profile")}
+            as="div"
           >
             Profile
           </Sidebar.Item>
