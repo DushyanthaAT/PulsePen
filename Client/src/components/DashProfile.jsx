@@ -13,7 +13,7 @@ const DashProfile = () => {
   const [imageFileUrl, setImageFileUrl] = useState(currentUser?.ProfilePicture || null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
-
+  const [formData,setFormData]=useState({});
   const filePickerRef = useRef();
 
   const handleImageChange = (e) => {
@@ -46,6 +46,7 @@ const DashProfile = () => {
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setImageFileUrl(downloadURL);
+          setFormData({...formData, ProfilePicture:downloadURL});
         }
       );
     } catch (error) {
@@ -61,12 +62,26 @@ const DashProfile = () => {
     }
   }, [imageFile]);
 
+  const handleChange=(e)=>{
+    setFormData({...formData,[e.target.id]:e.target.value});
+  };
+  const handleSubmit=(e)=>{
+    e.preventDefault();
+    if(Object.key(formData).length ===0){
+      return;
+    }
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="max-w-lg mx-auto p-3 w-full h-screen">
       <h1 className="my-7 text-center font-semibold text-3xl dark:text-white">
         Profile
       </h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="file"
           accept="image/*"
@@ -109,15 +124,15 @@ const DashProfile = () => {
           type="text"
           id="username"
           placeholder="Username"
-          defaultValue={currentUser.username}
+          defaultValue={currentUser.username}onChange={handleChange}
         />
         <TextInput
           type="email"
           id="email"
           placeholder="Email"
-          defaultValue={currentUser.email}
+          defaultValue={currentUser.email}onChange={handleChange}
         />
-        <TextInput type="password" id="password" placeholder="Password" />
+        <TextInput type="password" id="password" placeholder="Password" onChange={handleChange}/>
         <Button type="submit" color="dark" className="dark:bg-slate-400">
           Update
         </Button>
