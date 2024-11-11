@@ -23,6 +23,14 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    updateStart: (state,action)=>{
+      state.loading=true;
+      state.error=null;
+    },
+    updateStart:(state)=>{
+      state.loading=true;
+      state.error=null;
+    }
   },
 });
 
