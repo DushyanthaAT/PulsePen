@@ -1,21 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Button, TextInput } from "flowbite-react";
+import { Alert, Button, TextInput } from "flowbite-react";
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from "../firebase";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-
+import { updateStart, updateSuccess,updateFailure } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 const DashProfile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
-  const [imageFileUrl, setImageFileUrl] = useState(currentUser?.ProfilePicture || null);
+  const [imageFileUrl, setImageFileUrl] = useState(currentUser?.profilePicture || null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(null);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
+  const [imageFileUploading, setImageFileUploading]=useState(false);
+  const [updateUserSuccess,setUpdateUserSuccess]=useState(null);
+  const [updateUserError,setUpdateUserError]=useState(null);
   const [formData,setFormData]=useState({});
   const filePickerRef = useRef();
-
+  const dispatch=useDispatch();
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -25,6 +29,7 @@ const DashProfile = () => {
   };
 
   const uploadImage = async () => {
+    setImageFileUploading(true);
     setImageFileUploadError(null);
     if (!imageFile) return;
 
@@ -42,11 +47,14 @@ const DashProfile = () => {
         },
         (error) => {
           setImageFileUploadError('Could not upload image (File must be less than 2MB)');
+          setImageFileUploading(false);
         },
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setImageFileUrl(downloadURL);
-          setFormData({...formData, ProfilePicture:downloadURL});
+          setFormData({...formData, profilePicture:downloadURL});
+          setImageFileUploadProgress(null);
+          setImageFileUploading(false);
         }
       );
     } catch (error) {
@@ -65,15 +73,39 @@ const DashProfile = () => {
   const handleChange=(e)=>{
     setFormData({...formData,[e.target.id]:e.target.value});
   };
-  const handleSubmit=(e)=>{
+  const handleSubmit= async(e)=>{
     e.preventDefault();
-    if(Object.key(formData).length ===0){
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+    if(Object.keys(formData).length ===0){
+      setUpdateUserError('No Changes Made');
       return;
     }
+    if(imageFileUploading){
+      setUpdateUserError('Please wait for image upload')
+      return;
+
+    }
     try {
-      
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method:'PUT',
+        headers:{
+          'Content-Type':'application/json',
+        },
+        body:JSON.stringify(formData),
+      });
+      const data=await res.json();
+      if(!res.ok){
+        dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
+      }else{
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully!")
+      }
     } catch (error) {
-      
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(data.message);
     }
   }
   return (
@@ -91,7 +123,7 @@ const DashProfile = () => {
         />
         <div
           className="w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full relative"
-          onClick={() => filePickerRef.current.click()}
+          onClick={() => filePickerRef.current?.click()} 
         >
            {imageFileUploadProgress && (
             <CircularProgressbar
@@ -115,7 +147,7 @@ const DashProfile = () => {
             />
           )}  
           <img
-            src={imageFileUrl || currentUser.ProfilePicture}
+            src={imageFileUrl || currentUser.profilePicture}
             alt="user"
             className={`rounded-full w-full h-full object-cover border-8 border-lightgray ${imageFileUploadProgress && imageFileUploadProgress < 100 && 'opacity-60'}`}
           />
@@ -151,6 +183,16 @@ const DashProfile = () => {
           <span className="cursor-pointer">Sign Out</span>
         </div>
       </form>
+      {updateUserSuccess &&(
+        <Alert color="success" className="mt-5">
+          {updateUserSuccess}
+        </Alert>
+      )}
+      {updateUserError && (
+        <Alert color="failure" className="mt-5">
+          {updateUserError}
+        </Alert>
+      )}
     </div>
   );
 };
