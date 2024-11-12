@@ -48,7 +48,7 @@ const Header = () => {
             label={
               <Avatar
                 alt={currentUser.username}
-                img={currentUser.ProfilePicture}
+                img={currentUser.profilePicture}
                 rounded
               />
             }
