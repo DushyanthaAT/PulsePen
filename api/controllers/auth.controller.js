@@ -54,7 +54,10 @@ export const signin = async (req, res, next) => {
     }
 
     //if both email & password correct
-    const token = jwt.sign({ id: validUser._id , isAdmin:user.isAdmin}, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      { id: validUser._id, isAdmin: validUser.isAdmin },
+      process.env.JWT_SECRET
+    );
 
     //hide password(should not send the password back)
     const { password: pass, ...rest } = validUser._doc;
