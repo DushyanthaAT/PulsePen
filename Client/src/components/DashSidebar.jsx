@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Sidebar } from "flowbite-react";
-import {
-  HiArrowSmRight,
-  HiDocument,
-  HiDocumentText,
-  HiUser,
-} from "react-icons/hi";
+import { HiArrowSmRight, HiDocumentText } from "react-icons/hi";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { HiMiniUserGroup } from "react-icons/hi2";
+import { HiUserCircle } from "react-icons/hi";
 
 const DashSidebar = () => {
   const [tab, setTab] = useState("");
@@ -46,7 +43,7 @@ const DashSidebar = () => {
         <Sidebar.ItemGroup className="flex flex-col gap-1">
           <Sidebar.Item
             active={tab === "profile"}
-            icon={HiUser}
+            icon={HiUserCircle}
             label={currentUser.isAdmin ? "Admin" : "User"}
             labelColor="dark"
             onClick={() => navigate("/dashboard?tab=profile")}
@@ -65,6 +62,19 @@ const DashSidebar = () => {
               </Sidebar.Item>
             </Link>
           )}
+
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=users">
+              <Sidebar.Item
+                active={tab === "users"}
+                icon={HiMiniUserGroup}
+                as="div"
+              >
+                Users
+              </Sidebar.Item>
+            </Link>
+          )}
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"
