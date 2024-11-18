@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import DarkLogo from "../assets/DarkLogo.png";
 import LightLogo from "../assets/LightLogo.png";
-
 import { CiSearch } from "react-icons/ci";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
@@ -12,28 +11,49 @@ import { signOutSuccess } from "../redux/user/userSlice";
 
 const Header = () => {
   const path = useLocation().pathname;
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
-
+  const [searchTerm, setSearchTerm] = useState("");
   const theme = useSelector((state) => state.theme.theme);
   const logo = theme === "dark" ? LightLogo : DarkLogo;
   const icon = theme === "dark" ? <FaSun /> : <FaMoon />;
 
-  const handleSignout=async ()=>{
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
+
+  const handleSignout = async () => {
     try {
-      const res=await fetch ('/api/user/signout',{
-        method:'POST',
+      const res = await fetch("/api/user/signout", {
+        method: "POST",
       });
-      const data=await res.json();
-      if(!res.ok){
+      const data = await res.json();
+      if (!res.ok) {
         console.log(data.message);
-      }else{
+      } else {
         dispatch(signOutSuccess());
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    // urlParams.set("searchTerm", sidebarData.searchTerm);
+    // urlParams.set("sort", sidebarData.sort);
+    // urlParams.set("category", sidebarData.category);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
 
   return (
     <Navbar className="border-b-2">
@@ -42,10 +62,17 @@ const Header = () => {
         <img src={logo} alt="logo" />
       </Link>
 
-      {/* Search Section */}
-      <form className="hidden lg:inline">
-        <TextInput type="text" placeholder="Search.." rightIcon={CiSearch} />
-      </form>
+      {/* Search Section
+      <form onSubmit={handleSubmit}>
+        <TextInput
+          type="text"
+          placeholder="Search.."
+          rightIcon={CiSearch}
+          value={searchTerm}
+          className="hidden lg:inline"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </form> */}
 
       {/* Right-aligned Links and Toggle Button */}
       <div className="flex items-center gap-2 md:order-2">
