@@ -6,6 +6,7 @@ import { signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { HiUserCircle } from "react-icons/hi";
+import { HiAnnotation } from "react-icons/hi";
 
 const DashSidebar = () => {
   const [tab, setTab] = useState("");
@@ -64,15 +65,26 @@ const DashSidebar = () => {
           )}
 
           {currentUser.isAdmin && (
-            <Link to="/dashboard?tab=users">
-              <Sidebar.Item
-                active={tab === "users"}
-                icon={HiMiniUserGroup}
-                as="div"
-              >
-                Users
-              </Sidebar.Item>
-            </Link>
+            <>
+              <Link to="/dashboard?tab=users">
+                <Sidebar.Item
+                  active={tab === "users"}
+                  icon={HiMiniUserGroup}
+                  as="div"
+                >
+                  Users
+                </Sidebar.Item>
+              </Link>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  as="div"
+                >
+                  Comments
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
 
           <Sidebar.Item
