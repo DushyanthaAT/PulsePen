@@ -25,6 +25,7 @@ export default function Search() {
     const searchTermFromUrl = urlParams.get("searchTerm");
     const sortFromUrl = urlParams.get("sort");
     const categoryFromUrl = urlParams.get("category");
+
     if (searchTermFromUrl || sortFromUrl || categoryFromUrl) {
       setSidebarData({
         ...sidebarData,
