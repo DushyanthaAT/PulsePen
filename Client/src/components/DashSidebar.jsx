@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiMiniUserGroup } from "react-icons/hi2";
 import { HiUserCircle } from "react-icons/hi";
 import { HiAnnotation } from "react-icons/hi";
+import { TbLayoutDashboardFilled } from "react-icons/tb";
 
 const DashSidebar = () => {
   const [tab, setTab] = useState("");
@@ -52,6 +53,17 @@ const DashSidebar = () => {
           >
             Profile
           </Sidebar.Item>
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=dash">
+              <Sidebar.Item
+                active={tab === "dash" || !tab}
+                icon={TbLayoutDashboardFilled}
+                as="div"
+              >
+                Dashboard
+              </Sidebar.Item>
+            </Link>
+          )}
           {currentUser.isAdmin && (
             <Link to="/dashboard?tab=posts">
               <Sidebar.Item
