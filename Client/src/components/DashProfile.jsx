@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import { LuPencilLine } from "react-icons/lu";
+import { HiSwitchHorizontal } from "react-icons/hi";
 
 const DashProfile = () => {
   const { currentUser, error, loading } = useSelector((state) => state.user);
@@ -23,6 +24,8 @@ const DashProfile = () => {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserError, setUpdateUserError] = useState(null);
   const [showModel, setShowModal] = useState(false);
+  const [showModel2, setShowModal2] = useState(false);
+  const [showModel3, setShowModal3] = useState(false);
   const [formData, setFormData] = useState({});
   const filePickerRef = useRef();
   const dispatch = useDispatch();
@@ -82,6 +85,7 @@ const DashProfile = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUpdateUserError(null);
@@ -116,6 +120,7 @@ const DashProfile = () => {
       setUpdateUserError(data.message);
     }
   };
+
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -147,6 +152,55 @@ const DashProfile = () => {
       }
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  // const handleSwitchToAdmin = async () => {
+  //   try {
+  //     dispatch(updateStart());
+  //     const res = await fetch(`/api/user/update-admin/${currentUser._id}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ isAdmin: !currentUser.isAdmin }),
+  //     });
+  //     const data = await res.json();
+  //     if (!res.ok) {
+  //       dispatch(updateFailure(data.message));
+  //     } else {
+  //       dispatch(updateSuccess(data));
+  //     }
+  //   } catch (error) {
+  //     dispatch(updateFailure(error.message));
+  //   }
+  // };
+
+  const handleSwitchToAdmin = async (e) => {
+    e.preventDefault();
+    setUpdateUserError(null);
+    setUpdateUserSuccess(null);
+    setShowModal3(false);
+    try {
+      dispatch(updateStart());
+      const res = await fetch(`/api/user/update-admin/${currentUser._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isAdmin: !currentUser.isAdmin }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        dispatch(updateFailure(data.message));
+        setUpdateUserError(data.message);
+      } else {
+        dispatch(updateSuccess(data));
+        setUpdateUserSuccess("User's profile updated successfully!");
+      }
+    } catch (error) {
+      dispatch(updateFailure(error.message));
+      setUpdateUserError(data.message);
     }
   };
 
@@ -244,7 +298,7 @@ const DashProfile = () => {
             Delete Account
           </span>
           <span
-            onClick={handleSignout}
+            onClick={() => setShowModal2(true)}
             className="cursor-pointer text-gray-800 font-medium dark:text-gray-200"
           >
             Sign Out
@@ -261,6 +315,23 @@ const DashProfile = () => {
                 Create a Post
               </Button>
             </Link>
+          </div>
+        )}
+        {!currentUser.isAdmin && (
+          <div className="flex flex-col gap-3 items-center bg-primary-light p-5 rounded-xl text-center font-semibold">
+            <span>
+              Ready to share your thoughts? Switch to Writer Mode by clicking
+              Start and begin crafting your articles!
+            </span>
+            <Button
+              type="button"
+              className="rounded-full flex justify-center items-center"
+              color="light"
+              onClick={() => setShowModal3(true)}
+            >
+              <LuPencilLine className="h-5 w-5 mr-3" />
+              Start
+            </Button>
           </div>
         )}
       </form>
@@ -301,6 +372,78 @@ const DashProfile = () => {
                 No, cancel
               </Button>
             </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showModel2}
+        onClose={() => setShowModal2(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationTriangle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-md text-gray-500 dark:text-gray-300">
+              Are you sure you want to do Signout?
+            </h3>
+            <div className="flex justify-center gap-6">
+              <Button color="failure" onClick={handleSignout}>
+                Yes, I am sure
+              </Button>
+              <Button color="gray" onClick={() => setShowModal2(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showModel3}
+        onClose={() => setShowModal3(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-left flex flex-col">
+            <HiSwitchHorizontal className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-2 mx-auto" />
+            <h1 className="text-primary text-lg font-bold self-center flex">
+              Switch to Writer Account
+            </h1>
+            <div className="items-start w-full">
+              <span className="text-sm font-semibold block text-justify leading-normal mb-2 mt-3">
+                &#8226; Are you passionate about sharing your thoughts,
+                expertise, or stories with others? Switching to a Writer Account
+                will allow you to contribute articles and become an active voice
+                in our blogging community.
+                <br />
+              </span>
+              <span className="text-sm font-semibold block text-justify leading-normal">
+                &#8226; As a writer, you'll be able to:
+              </span>
+              <ul className="text-sm mt-1 mb-5">
+                <li className="ml-2">
+                  &#10687; Create and publish your own articles.
+                </li>
+                <li className="ml-2">
+                  &#10687; Manage, edit, and delete your content anytime.
+                </li>
+                <li className="ml-2">
+                  &#10687; Engage with readers and receive feedback.
+                </li>
+              </ul>
+            </div>
+            <Button
+              color="dark"
+              className="bg-primary enabled:hover:bg-primary-dark"
+              onClick={handleSwitchToAdmin}
+            >
+              Switch
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
