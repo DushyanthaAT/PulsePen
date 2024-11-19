@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, Dropdown, Navbar, TextInput } from "flowbite-react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  Navbar,
+  TextInput,
+  Modal,
+} from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DarkLogo from "../assets/DarkLogo.png";
 import LightLogo from "../assets/LightLogo.png";
@@ -7,6 +14,7 @@ import { CiSearch } from "react-icons/ci";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
+import { HiOutlineExclamationTriangle } from "react-icons/hi2";
 import { signOutSuccess } from "../redux/user/userSlice";
 
 const Header = () => {
@@ -19,6 +27,7 @@ const Header = () => {
   const theme = useSelector((state) => state.theme.theme);
   const logo = theme === "dark" ? LightLogo : DarkLogo;
   const icon = theme === "dark" ? <FaSun /> : <FaMoon />;
+  const [showModel2, setShowModal2] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -106,7 +115,9 @@ const Header = () => {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             <Dropdown.Divider />
-            <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={() => setShowModal2(true)}>
+              Sign Out
+            </Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/sign-in">
@@ -131,6 +142,30 @@ const Header = () => {
           <Link to="/about">About</Link>
         </Navbar.Link>
       </Navbar.Collapse>
+      <Modal
+        show={showModel2}
+        onClose={() => setShowModal2(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationTriangle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-md text-gray-500 dark:text-gray-300">
+              Are you sure you want to do Signout?
+            </h3>
+            <div className="flex justify-center gap-6">
+              <Button color="failure" onClick={handleSignout}>
+                Yes, I am sure
+              </Button>
+              <Button color="gray" onClick={() => setShowModal2(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </Navbar>
   );
 };
