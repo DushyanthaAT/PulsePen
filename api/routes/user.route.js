@@ -4,6 +4,7 @@ import {
   getUser,
   getUsers,
   signout,
+  switchToAdmin,
   test,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -17,5 +18,6 @@ router.delete("/delete/:userId", verifyToken, deleteUser);
 router.post("/signout", signout);
 router.get("/getusers", verifyToken, getUsers);
 router.get("/:userId", getUser);
+router.put("/update-admin/:userId", verifyToken, switchToAdmin);
 
 export default router;
