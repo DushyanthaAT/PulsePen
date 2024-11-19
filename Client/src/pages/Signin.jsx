@@ -20,6 +20,7 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+import { FaArrowRight } from "react-icons/fa";
 
 const customTheme = {
   button: {
@@ -71,7 +72,7 @@ const Signin = () => {
 
   return (
     <Flowbite theme={{ theme: customTheme }}>
-      <div className="flex h-[calc(100vh-40px)] bg-white m-5 p-3 rounded-[30px] flex-col md:flex-row overflow-y-auto">
+      <div className="flex h-[calc(100vh-40px)] bg-white  dark:bg-gray-900  dark:text-white m-5 p-3 rounded-[30px] flex-col md:flex-row overflow-y-auto">
         {/* Left Side */}
         <div className="flex-[3] md:flex-[4] lg:flex-[3] flex flex-col items-center justify-center rounded-[20px] overflow-hidden">
           <img
@@ -151,7 +152,9 @@ const Signin = () => {
             <OAuth />
           </form>
           <div className="">
-            <span className="text-secondary">Don't have an account? </span>
+            <span className="text-secondary  dark:text-white ">
+              Don't have an account?{" "}
+            </span>
             <Link to="/sign-up" className="text-primary font-semibold">
               Sign Up
             </Link>
@@ -161,6 +164,17 @@ const Signin = () => {
               {errorMessage}
             </Alert>
           )}
+          <Link
+            to="/"
+            className="mt-5 text-sm flex justify-center items-center"
+          >
+            <span className="text-gray-700 dark:text-gray-200">
+              Continue Without Signing In
+            </span>
+            <div className="">
+              <FaArrowRight className="h-full ml-2 text-gray-700 dark:text-gray-200" />
+            </div>
+          </Link>
         </div>
       </div>
     </Flowbite>
