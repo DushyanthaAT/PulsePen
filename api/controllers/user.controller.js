@@ -129,3 +129,24 @@ export const getUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const switchToAdmin = async (req, res, next) => {
+  if (req.user.id !== req.params.userId) {
+    return next(errorHandler(403, "You are not allowed to update this user"));
+  }
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.userId,
+      {
+        $set: {
+          isAdmin: req.body.isAdmin,
+        },
+      },
+      { new: true }
+    );
+    const { password, ...rest } = updatedUser._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
