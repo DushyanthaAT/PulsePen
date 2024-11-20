@@ -9,7 +9,6 @@ import {
   Alert,
   Spinner,
 } from "flowbite-react";
-import { IoPersonOutline } from "react-icons/io5";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { IoMailOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
