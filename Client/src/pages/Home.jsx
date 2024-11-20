@@ -5,8 +5,7 @@ import bgHome from "../assets/bgHome.png";
 import bgHomeDark from "../assets/bgHomeDark.png";
 import logo from "../assets/DarkLogo.png";
 import { CiSearch } from "react-icons/ci";
-import { Button, TextInput } from "flowbite-react";
-import { FaArrowRight } from "react-icons/fa";
+import { TextInput } from "flowbite-react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
