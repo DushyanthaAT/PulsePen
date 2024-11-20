@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
-import CallToAction from "../components/CallToAction";
 import CommentSectoin from "../components/CommentSectoin";
 import PostCard from "../components/PostCard";
 
