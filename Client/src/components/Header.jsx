@@ -10,7 +10,6 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import DarkLogo from "../assets/DarkLogo.png";
 import LightLogo from "../assets/LightLogo.png";
-import { CiSearch } from "react-icons/ci";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
