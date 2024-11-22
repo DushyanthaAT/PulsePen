@@ -14,8 +14,16 @@ export default function DashPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
-        const data = await res.json();
+        let res, data;
+
+        if (currentUser.isSuperAdmin) {
+          res = await fetch(`/api/post/getposts`);
+          data = await res.json();
+        } else {
+          res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
+          data = await res.json();
+        }
+
         if (res.ok) {
           setUserPosts(data.posts);
           if (data.posts.length < 9) {
@@ -26,10 +34,12 @@ export default function DashPosts() {
         console.log(error.message);
       }
     };
+
     if (currentUser.isAdmin) {
       fetchPosts();
     }
-  }, [currentUser._id]);
+  }, [currentUser._id, currentUser.isAdmin, currentUser.isSuperAdmin]);
+  
 
   const handleShowMore = async () => {
     const startIndex = userPosts.length;
