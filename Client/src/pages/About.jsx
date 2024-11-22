@@ -17,15 +17,6 @@ const About = () => {
                 become a writer and share their thoughts, passions, and
                 perspectives with a global audience.
               </p>
-              <h2 className="text-xl font-bold">Our Mission</h2>
-
-              <p>
-                To empower individuals to express themselves, connect with
-                others, and spark meaningful conversations through the written
-                word. Whether you're sharing a life experience, exploring a
-                creative idea, or diving into a trending topic, PulsePen is the
-                place to let your voice be heard.
-              </p>
 
               <h2 className="text-xl font-bold">What Makes Us Different</h2>
               <ul className="list-disc list-inside text-left">
