@@ -14,7 +14,7 @@ import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 
-const CreatePost = () => {
+export default function CreatePost() {
   const [value, setValue] = useState("");
   const theme = useSelector((state) => state.theme.theme);
   const [file, setFile] = useState(null);
@@ -60,7 +60,6 @@ const CreatePost = () => {
       console.log(error);
     }
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -85,12 +84,11 @@ const CreatePost = () => {
       setPublishError("Something went wrong");
     }
   };
-
   return (
     <div className="w-screen bg-white  dark:bg-gray-900">
       <div className="p-3 max-w-3xl mx-auto min-h-screen">
         <h1 className="text-center text-3xl my-7 font-semibold dark:text-white">
-          Create a Post
+          Create a post
         </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4 sm:flex-row justify-between">
@@ -101,15 +99,15 @@ const CreatePost = () => {
               id="title"
               className="flex-1"
               onChange={(e) =>
-                setFormData({ ...FormData, title: e.target.value })
+                setFormData({ ...formData, title: e.target.value })
               }
             />
             <Select
               onChange={(e) =>
-                setFormData({ ...FormData, category: e.target.value })
+                setFormData({ ...formData, category: e.target.value })
               }
             >
-              <option value="Uncategorized">Select a Category</option>
+              <option value="uncategorized">Select a category</option>
               <option value="javascript">JavaScript</option>
               <option value="reactjs">React.js</option>
               <option value="nextjs">Next.js</option>
@@ -153,12 +151,12 @@ const CreatePost = () => {
           <div className={theme === "dark" ? "dark" : ""}>
             <ReactQuill
               theme="snow"
-              placeholder="Write Something..."
-              className="h-72 mb-12 dark:text-white"
+              placeholder="Write something..."
+              className="h-72 mb-12"
+              required
               onChange={(value) => {
                 setFormData({ ...formData, content: value });
               }}
-              required
             />
           </div>
 
@@ -174,6 +172,4 @@ const CreatePost = () => {
       </div>
     </div>
   );
-};
-
-export default CreatePost;
+}
