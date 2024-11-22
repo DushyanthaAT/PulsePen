@@ -46,6 +46,7 @@ const Header = () => {
         console.log(data.message);
       } else {
         dispatch(signOutSuccess());
+        setShowModal2(false);
       }
     } catch (error) {
       console.log(error.message);
