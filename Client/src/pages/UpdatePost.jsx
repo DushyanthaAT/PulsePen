@@ -110,6 +110,18 @@ export default function UpdatePost() {
       setPublishError("Something went wrong");
     }
   };
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline"],
+      ["blockquote", "code-block"], // Include code block button in toolbar
+      [{ align: [] }],
+      ["link"],
+      [{ color: [] }, { background: [] }],
+    ],
+  };
+
   return (
     <div className="w-screen bg-white  dark:bg-gray-900">
       <div className="p-3 max-w-3xl mx-auto min-h-screen">
@@ -135,7 +147,7 @@ export default function UpdatePost() {
               }
               value={formData.category}
             >
-              <option value="uncategorized">Select a Category</option>
+              <option value="uncategorized">Select a category</option>
               <option value="javascript">JavaScript</option>
               <option value="reactjs">React.js</option>
               <option value="nextjs">Next.js</option>
@@ -151,6 +163,7 @@ export default function UpdatePost() {
               type="button"
               color="dark"
               size="sm"
+              outline
               onClick={handleUpdloadImage}
               disabled={imageUploadProgress}
             >
@@ -182,6 +195,7 @@ export default function UpdatePost() {
             placeholder="Write something..."
             className="h-72 mb-12"
             required
+            modules={modules}
             onChange={(value) => {
               setFormData({ ...formData, content: value });
             }}

@@ -1,7 +1,7 @@
 import { Alert, Button, FileInput, Select, TextInput } from "flowbite-react";
 import { React, useState } from "react";
 import { useSelector } from "react-redux";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill"; // Import Quill and ReactQuill
 import "react-quill/dist/quill.snow.css";
 import {
   getDownloadURL,
@@ -13,6 +13,10 @@ import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate } from "react-router-dom";
+
+// Register custom formats for code blocks
+const CodeBlock = Quill.import("formats/code");
+Quill.register(CodeBlock, true);
 
 export default function CreatePost() {
   const [value, setValue] = useState("");
@@ -60,6 +64,7 @@ export default function CreatePost() {
       console.log(error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -84,8 +89,21 @@ export default function CreatePost() {
       setPublishError("Something went wrong");
     }
   };
+
+  const modules = {
+    toolbar: [
+      [{ header: "1" }, { header: "2" }, { font: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["bold", "italic", "underline"],
+      ["blockquote", "code-block"],
+      [{ align: [] }],
+      ["link"],
+      [{ color: [] }, { background: [] }],
+    ],
+  };
+
   return (
-    <div className="w-screen bg-white  dark:bg-gray-900">
+    <div className="w-screen bg-white dark:bg-gray-900">
       <div className="p-3 max-w-3xl mx-auto min-h-screen">
         <h1 className="text-center text-3xl my-7 font-semibold dark:text-white">
           Create a post
@@ -154,6 +172,7 @@ export default function CreatePost() {
               placeholder="Write something..."
               className="h-72 mb-12"
               required
+              modules={modules} // Pass custom toolbar configuration
               onChange={(value) => {
                 setFormData({ ...formData, content: value });
               }}

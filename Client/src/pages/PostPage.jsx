@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Button, Spinner } from "flowbite-react";
 import CommentSectoin from "../components/CommentSectoin";
 import PostCard from "../components/PostCard";
+import "react-quill/dist/quill.snow.css"; // Import Quill styles for proper formatting
 
 export default function PostPage() {
   const { postSlug } = useParams();
@@ -22,11 +23,9 @@ export default function PostPage() {
           setLoading(false);
           return;
         }
-        if (res.ok) {
-          setPost(data.posts[0]);
-          setLoading(false);
-          setError(false);
-        }
+        setPost(data.posts[0]);
+        setLoading(false);
+        setError(false);
       } catch (error) {
         setError(true);
         setLoading(false);
@@ -36,18 +35,18 @@ export default function PostPage() {
   }, [postSlug]);
 
   useEffect(() => {
-    try {
-      const fetchRecentPosts = async () => {
+    const fetchRecentPosts = async () => {
+      try {
         const res = await fetch(`/api/post/getposts?limit=3`);
         const data = await res.json();
         if (res.ok) {
           setRecentPosts(data.posts);
         }
-      };
-      fetchRecentPosts();
-    } catch (error) {
-      console.log(error.message);
-    }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchRecentPosts();
   }, []);
 
   if (loading)
@@ -56,12 +55,25 @@ export default function PostPage() {
         <Spinner size="xl" />
       </div>
     );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-red-500">
+          Failed to load the post. Please try again later.
+        </p>
+      </div>
+    );
+
   return (
     <div className="flex bg-white dark:bg-gray-900 dark:text-white">
-      <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
+      <main className="p-3 flex flex-col max-w-full mx-auto min-h-screen">
+        {/* Post Title */}
         <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl lg:text-4xl dark:text-white self-center">
           {post && post.title}
         </h1>
+
+        {/* Post Category */}
         <Link
           to={`/search?category=${post && post.category}`}
           className="self-center mt-5"
@@ -70,24 +82,35 @@ export default function PostPage() {
             {post && post.category}
           </Button>
         </Link>
+
+        {/* Post Image */}
         <img
           src={post && post.image}
           alt={post && post.title}
           className="mt-10 p-3 max-h-[600px] w-full object-cover"
         />
+
+        {/* Post Metadata */}
         <div className="flex justify-between p-3 border-b border-slate-300 mx-auto w-full max-w-2xl text-xs">
+          <span>{user.username}</span>
           <span>{post && new Date(post.createdAt).toLocaleDateString()}</span>
           <span className="italic">
             {post && (post.content.length / 1000).toFixed(0)} mins read
           </span>
         </div>
+
+        {/* Post Content */}
         <div
           className="p-3 max-w-2xl mx-auto w-full post-content"
           dangerouslySetInnerHTML={{ __html: post && post.content }}
         ></div>
-        <CommentSectoin postId={post._id} />
+
+        {/* Comment Section */}
+        <CommentSectoin postId={post && post._id} />
+
+        {/* Recent Articles */}
         <div className="flex flex-col justify-center items-center mb-5">
-          <h1 className="text-xl mt-5">Recent Articals</h1>
+          <h1 className="text-xl mt-5">Recent Articles</h1>
           <div className="flex flex-wrap gap-5 mt-5 justify-center">
             {recentPosts &&
               recentPosts.map((post) => (
@@ -99,4 +122,3 @@ export default function PostPage() {
     </div>
   );
 }
-

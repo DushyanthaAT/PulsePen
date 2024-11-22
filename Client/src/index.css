@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --code-line-bg-color: #f3f4f6; /* Light mode code line background */
+  --code-text-color: #1f2937;    /* Light mode text color */
+  --blockquote-bg-color: #f3f4f6; /* Light mode background */
+  --blockquote-border-color: #e5e7eb; /* Light mode border */
+  --blockquote-text-color: #374151; /* Light mode text color */
+  --list-text-color: #374151; 
+}
+
+.dark {
+  --code-line-bg-color: #1e293b; /* Dark mode code line background */
+  --code-text-color: #f3f3f3;    /* Dark mode text color */
+  --blockquote-bg-color: #1e293b; /* Dark mode background */
+  --blockquote-border-color: #4b5563; /* Dark mode border */
+  --blockquote-text-color: #f3f4f6; /* Dark mode text color */
+  --list-text-color: #f3f4f6; 
+}
+
+
 body{
     height: 100vh;
 
@@ -55,3 +74,61 @@ body{
   .dark .post-content a {
     color: red;
   }
+
+  .ql-snow .ql-code-block {
+    background-color: #f4f4f4;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    border-radius: 4px;
+    overflow-x: auto;
+  }
+  
+  .post-content pre {
+    background-color: var(--code-line-bg-color);
+    color: var(--code-text-color);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .post-content code {
+    background-color: var(--code-line-bg-color);
+    color: var(--code-text-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+  }
+
+  .post-content blockquote {
+    background-color: var(--blockquote-bg-color);
+    border-left: 4px solid var(--blockquote-border-color);
+    color: var(--blockquote-text-color);
+    padding: 1rem;
+    margin: 1rem 0;
+    font-style: italic;
+    border-radius: 0.5rem;
+  }
+
+  .post-content ul,
+.post-content ol {
+  color: var(--list-text-color);
+  padding-left: 1.5rem; /* Adds space before list */
+  margin: 1rem 0; /* Space around list */
+}
+
+.post-content ul {
+  list-style-type: disc; /* Bullet points for unordered lists */
+}
+
+.post-content ol {
+  list-style-type: decimal; /* Numbers for ordered lists */
+}
+
+.post-content li {
+  margin-bottom: 0.5rem; /* Space between list items */
+}
