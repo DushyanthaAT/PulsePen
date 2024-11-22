@@ -49,7 +49,13 @@ const DashSidebar = () => {
             <Sidebar.Item
               active={tab === "profile"}
               icon={HiUserCircle}
-              label={currentUser.isAdmin ? "Admin" : "User"}
+              label={
+                currentUser.isSuperAdmin
+                  ? "Super Admin"
+                  : currentUser.isAdmin
+                  ? "Admin"
+                  : "User"
+              }
               labelColor="dark"
               onClick={() => navigate("/dashboard?tab=profile")}
               as="div"
