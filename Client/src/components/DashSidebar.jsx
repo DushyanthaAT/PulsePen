@@ -57,25 +57,26 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>
             {currentUser.isAdmin && (
-              <Link to="/dashboard?tab=dash">
+              <Link to="/dashboard?tab=posts">
                 <Sidebar.Item
-                  active={tab === "dash" || !tab}
-                  icon={TbLayoutDashboardFilled}
+                  active={tab === "posts"}
+                  icon={HiDocumentText}
                   as="div"
                 >
-                  Dashboard
+                  Post
                 </Sidebar.Item>
               </Link>
             )}
-            {currentUser.isAdmin && (
+
+            {currentUser.isSuperAdmin && (
               <>
-                <Link to="/dashboard?tab=posts">
+                <Link to="/dashboard?tab=dash">
                   <Sidebar.Item
-                    active={tab === "posts"}
-                    icon={HiDocumentText}
+                    active={tab === "dash" || !tab}
+                    icon={TbLayoutDashboardFilled}
                     as="div"
                   >
-                    Post
+                    Dashboard
                   </Sidebar.Item>
                 </Link>
                 <Link to="/dashboard?tab=comments">
@@ -87,19 +88,16 @@ const DashSidebar = () => {
                     Comments
                   </Sidebar.Item>
                 </Link>
+                <Link to="/dashboard?tab=users">
+                  <Sidebar.Item
+                    active={tab === "users"}
+                    icon={HiMiniUserGroup}
+                    as="div"
+                  >
+                    Users
+                  </Sidebar.Item>
+                </Link>
               </>
-            )}
-
-            {currentUser.isSuperAdmin && (
-              <Link to="/dashboard?tab=users">
-                <Sidebar.Item
-                  active={tab === "users"}
-                  icon={HiMiniUserGroup}
-                  as="div"
-                >
-                  Users
-                </Sidebar.Item>
-              </Link>
             )}
 
             <Sidebar.Item
