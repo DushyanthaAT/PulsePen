@@ -14,7 +14,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTOp";
 import Search from "./pages/Search";
-import Mission from "./pages/mission";
+import MissionPage from "./pages/MissionPage";
 
 function App() {
   const location = useLocation();
@@ -26,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/mission" element={<Mission />} />
+        <Route path="/mission" element={<MissionPage />} />
         <Route path="/sign-in" element={<Signin />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="/search" element={<Search />} />
