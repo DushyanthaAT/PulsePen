@@ -1,6 +1,6 @@
 import React from "react";
 
-const Mission = () => {
+export const Mission = () => {
   return (
     <div className="flex flex-col w-full bg-white  dark:bg-gray-900 justify-center items-center dark:text-white">
       <div className="min-h-screen flex items-center justify-center">
@@ -22,5 +22,3 @@ const Mission = () => {
     </div>
   );
 };
-
-export default Mission;
