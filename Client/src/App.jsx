@@ -14,7 +14,7 @@ import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
 import ScrollToTop from "./components/ScrollToTOp";
 import Search from "./pages/Search";
-import { Mission } from "./pages/mission";
+import Mission from "./pages/mission";
 
 function App() {
   const location = useLocation();
