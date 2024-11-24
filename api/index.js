@@ -27,6 +27,7 @@ app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
 
+app.get("/", (req, res) => res.send("Express on Vercel"));
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoutes);
