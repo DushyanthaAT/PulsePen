@@ -9,7 +9,7 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useEffect, useState } from "react";
-import CircularProgressbar from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
