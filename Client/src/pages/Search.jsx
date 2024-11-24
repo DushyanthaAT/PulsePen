@@ -36,6 +36,10 @@ export default function Search() {
     }
 
     const fetchPosts = async () => {
+      if (sidebarData.category === "uncategorized") {
+        urlParams.delete("category");
+      }
+
       setLoading(true);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/post/getposts?${searchQuery}`);
@@ -139,10 +143,29 @@ export default function Search() {
                 value={sidebarData.category}
                 id="category"
               >
-                <option value="uncategorized">Uncategorized</option>
-                <option value="reactjs">React.js</option>
-                <option value="nextjs">Next.js</option>
-                <option value="javascript">JavaScript</option>
+                <option value="uncategorized">Select a category</option>
+                <option value="Algorithms and Data Structures">
+                  Algorithms and Data Structures
+                </option>
+                <option value="Career and Growth">Career and Growth</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Open Source">Open Source</option>
+                <option value="Programming Languages">
+                  Programming Languages
+                </option>
+                <option value="Software Design">Software Design</option>
+                <option value="Software Development">
+                  Software Development
+                </option>
+                <option value="Testing and Debugging">
+                  Testing and Debugging
+                </option>
+                <option value="Tools and Technologies">
+                  Tools and Technologies
+                </option>
+                <option value="Web and Mobile Projects">
+                  Web & Mobile Projects
+                </option>
               </Select>
             </div>
             <Button
