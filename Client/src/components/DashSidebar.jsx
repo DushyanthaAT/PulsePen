@@ -51,9 +51,9 @@ const DashSidebar = () => {
               icon={HiUserCircle}
               label={
                 currentUser.isSuperAdmin
-                  ? "Super Admin"
-                  : currentUser.isAdmin
                   ? "Admin"
+                  : currentUser.isAdmin
+                  ? "Writer"
                   : "User"
               }
               labelColor="dark"
