@@ -34,6 +34,12 @@ PulsePen is a full-stack blogging platform with rich features for readers, write
 
 ---
 
+## **UI/UX Case Study**
+
+[Watch the Case Study](https://www.behance.net/gallery/214190263/PulsePen-Blogging-website-UIUX-Case-Study)
+
+---
+
 ## **Tech Stack**
 
 - **Frontend**: React.js, Redux, TailwindCSS, Vite
