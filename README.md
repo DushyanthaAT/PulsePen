@@ -27,11 +27,7 @@
 
 ---
 
-## 📦 Installation  
-
-Follow these steps to set up PulsePen locally:  
-
-### Prerequisites  
+## 📦 Prerequisites  
 - Node.js (v16+)  
 - Firebase CLI  
 - Git  
